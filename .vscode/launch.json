@@ -5,6 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "GoniOwl IOC",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "fastcs_goniowl",
+            "justMyCode": false,
+            "console": "integratedTerminal",
+            "args": [
+                "GONIOWL",
+            ]
+        },
+        {
             "name": "Debug Unit Test",
             "type": "debugpy",
             "request": "launch",
