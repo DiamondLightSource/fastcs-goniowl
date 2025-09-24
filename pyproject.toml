@@ -12,7 +12,7 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 description = "Sample pin detection for beamline collision prevention"
-dependencies = [] # Add project dependencies here, e.g. ["click", "numpy"]
+dependencies = ["fastcs>=0.10.1"]
 dynamic = ["version"]
 license.file = "LICENSE"
 readme = "README.md"
