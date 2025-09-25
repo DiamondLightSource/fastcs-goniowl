@@ -12,7 +12,10 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 description = "Sample pin detection for beamline collision prevention"
-dependencies = ["fastcs>=0.10.1"]
+dependencies = [
+    "fastcs>=0.10.1",
+    "tensorflow>=2.20.0",
+]
 dynamic = ["version"]
 license.file = "LICENSE"
 readme = "README.md"
