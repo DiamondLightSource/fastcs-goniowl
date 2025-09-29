@@ -6,7 +6,10 @@ import cv2
 import keras
 import numpy as np
 import tensorflow as tf
+from fastcs.attributes import AttrR
 from fastcs.controller import Controller
+from fastcs.datatypes import Int
+from fastcs.wrappers import command
 
 # 20250929_122040_epoch100_binary_batch4.keras is 1/5 scaled image!
 
@@ -14,6 +17,8 @@ image_divider = 5
 
 
 class GoniOwlController(Controller):
+    status = AttrR(Int())
+
     def __init__(self):
         self.log_path = "GoniOwl_binary_controller.log"
         with open(self.log_path, "a") as f:
@@ -102,3 +107,7 @@ class GoniOwlController(Controller):
         with open(self.log_path, "a") as f:
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             f.write(f"{timestamp} - INFO - {msg}\n")
+
+    @command()
+    async def infer_pin(self) -> None:
+        await self.status.set(self.infer())
