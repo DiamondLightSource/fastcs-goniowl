@@ -45,7 +45,7 @@ class GoniOwlController(Controller):
         self.image = self.image[100:-100, 100:-100]
         cv2.imwrite("tmp.jpg", self.image)
         _, buffer = cv2.imencode(".jpg", self.image)
-        io_buf = BytesIO(buffer)
+        io_buf = BytesIO(buffer.tobytes())
         return io_buf
 
     def is_image_valid(self, img, low_thresh=20, high_thresh=235):
