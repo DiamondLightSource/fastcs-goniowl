@@ -36,8 +36,8 @@ def main(args: Sequence[str] | None = None) -> None:
         help="Show program version and exit",
     )
 
-    args = parser.parse_args()
-    pv_prefix = args.pv_prefix
+    parsed_args = parser.parse_args()
+    pv_prefix = parsed_args.pv_prefix
 
     ui_path = OPI_PATH if OPI_PATH.is_dir() else Path.cwd()
 
