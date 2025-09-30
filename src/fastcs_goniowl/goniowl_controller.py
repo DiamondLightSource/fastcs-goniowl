@@ -1,6 +1,6 @@
-import urllib
 from datetime import datetime
 from io import BytesIO
+from urllib import request
 
 import cv2
 import keras
@@ -39,7 +39,7 @@ class GoniOwlController(Controller):
         super().__init__()
 
     def urltoimage(self, url):
-        self.resp = urllib.request.urlopen(url)
+        self.resp = request.urlopen(url)
         self.image = np.asarray(bytearray(self.resp.read()), dtype="uint8")
         self.image = cv2.imdecode(self.image, cv2.IMREAD_COLOR)
         self.image = self.image[100:-100, 100:-100]
