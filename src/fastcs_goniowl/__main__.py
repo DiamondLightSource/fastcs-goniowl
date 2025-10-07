@@ -32,7 +32,7 @@ def main(args: Sequence[str] | None = None) -> None:
         "-v",
         "--version",
         action="version",
-        version=f"%(prog)s {__version__}",
+        version=f"{__version__}",
         help="Show program version and exit",
     )
 
