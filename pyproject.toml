@@ -14,7 +14,7 @@ classifiers = [
 description = "Sample pin detection for beamline collision prevention"
 dependencies = [
     "fastcs>=0.10.1",
-    "opencv-python>=4.12.0.88",
+    "opencv-python-headless>=4.12.0.88",
     "tensorflow>=2.20.0",
 ]
 dynamic = ["version"]
