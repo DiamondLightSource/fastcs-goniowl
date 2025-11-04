@@ -15,6 +15,7 @@ description = "Sample pin detection for beamline collision prevention"
 dependencies = [
     "fastcs>=0.10.1",
     "opencv-python-headless>=4.12.0.88",
+    "stdio-socket>=1.3.1",
     "tensorflow>=2.20.0",
 ]
 dynamic = ["version"]
