@@ -13,6 +13,7 @@
             "console": "integratedTerminal",
             "args": [
                 "GONIOWL",
+                "/workspaces/fastcs-goniowl/20250929_122040_epoch100_binary_batch4.keras"
             ]
         },
         {

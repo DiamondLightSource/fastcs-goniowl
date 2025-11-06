@@ -26,6 +26,9 @@ def main(args: Sequence[str] | None = None) -> None:
 
     # Positional argument
     parser.add_argument("pv_prefix", type=str, help="Prefix for process variable names")
+    parser.add_argument(
+        "keras_file_path", type=str, help="Path of keras model file to load"
+    )
 
     # Optional --version flag
     parser.add_argument(
@@ -38,11 +41,12 @@ def main(args: Sequence[str] | None = None) -> None:
 
     parsed_args = parser.parse_args()
     pv_prefix = parsed_args.pv_prefix
+    keras_file_path = parsed_args.keras_file_path
 
     ui_path = OPI_PATH if OPI_PATH.is_dir() else Path.cwd()
 
     # Create a controller instance...
-    controller = GoniOwlController()
+    controller = GoniOwlController(keras_file_path=keras_file_path)
 
     # ...some IOC options...
     options = EpicsCAOptions(

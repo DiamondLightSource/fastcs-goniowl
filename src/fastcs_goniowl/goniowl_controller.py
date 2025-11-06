@@ -19,14 +19,13 @@ image_divider = 5
 class GoniOwlController(Controller):
     status = AttrR(Int())
 
-    def __init__(self):
+    def __init__(self, keras_file_path: str):
+        self.keras_file_path = keras_file_path
         self.log_path = "GoniOwl_binary_controller.log"
         with open(self.log_path, "a") as f:
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             f.write(f"{timestamp} - INFO - GoniOwl binary controller started.\n")
-        self.model_name = (
-            "/workspaces/fastcs-goniowl/20250929_122040_epoch100_binary_batch4.keras"
-        )
+        self.model_name = self.keras_file_path
         self.model = keras.models.load_model(self.model_name)
 
         with open(self.log_path, "a") as f:
