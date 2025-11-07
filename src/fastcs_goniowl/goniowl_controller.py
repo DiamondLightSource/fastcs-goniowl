@@ -1,4 +1,3 @@
-from datetime import datetime
 from io import BytesIO
 from urllib import request
 
@@ -22,17 +21,17 @@ class GoniOwlController(Controller):
     def __init__(self, keras_file_path: str):
         self.keras_file_path = keras_file_path
         self.log_path = "GoniOwl_binary_controller.log"
-        with open(self.log_path, "a") as f:
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            f.write(f"{timestamp} - INFO - GoniOwl binary controller started.\n")
+        # with open(self.log_path, "a") as f:
+        #     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        #     f.write(f"{timestamp} - INFO - GoniOwl binary controller started.\n")
         self.model_name = self.keras_file_path
         self.model = keras.models.load_model(self.model_name)
 
-        with open(self.log_path, "a") as f:
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            f.write(
-                f"{timestamp} - INFO - Model {self.model_name} loaded successfully.\n"
-            )
+        # with open(self.log_path, "a") as f:
+        #     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        #     f.write(
+        #         f"{timestamp} - INFO - Model {self.model_name} loaded successfully.\n"
+        #     )
         self.model.summary()
         self.classes = ["pinoff", "pinon"]
         super().__init__()
@@ -103,9 +102,9 @@ class GoniOwlController(Controller):
         msg = f"Status is {self.predicted_label} with {str(rounded_score)} % conf."
         print(msg)
 
-        with open(self.log_path, "a") as f:
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            f.write(f"{timestamp} - INFO - {msg}\n")
+        # with open(self.log_path, "a") as f:
+        #     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        #     f.write(f"{timestamp} - INFO - {msg}\n")
 
     @command()
     async def infer_pin(self) -> None:
