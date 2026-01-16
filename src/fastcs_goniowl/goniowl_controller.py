@@ -6,9 +6,9 @@ import keras
 import numpy as np
 import tensorflow as tf
 from fastcs.attributes import AttrR
-from fastcs.controller import Controller
+from fastcs.controllers.controller import Controller
 from fastcs.datatypes import Int
-from fastcs.wrappers import command
+from fastcs.methods import command
 
 # 20250929_122040_epoch100_binary_batch4.keras is 1/5 scaled image!
 
@@ -108,4 +108,4 @@ class GoniOwlController(Controller):
 
     @command()
     async def infer_pin(self) -> None:
-        await self.status.set(self.infer())
+        await self.status.update(self.infer())
