@@ -5,6 +5,7 @@ from collections.abc import Sequence
 from pathlib import Path
 
 from fastcs.launch import FastCS
+from fastcs.logging import GraylogEndpoint, LogLevel, configure_logging
 from fastcs.transports.epics import (
     EpicsGUIOptions,
     EpicsIOCOptions,
@@ -44,6 +45,10 @@ def main(args: Sequence[str] | None = None) -> None:
     keras_file_path = parsed_args.keras_file_path
 
     ui_path = OPI_PATH if OPI_PATH.is_dir() else Path.cwd()
+
+    configure_logging(
+        LogLevel.INFO, GraylogEndpoint("graylog-log-target.diamond.ac.uk", 12201)
+    )
 
     # Create a controller instance...
     controller = GoniOwlController(keras_file_path=keras_file_path)
