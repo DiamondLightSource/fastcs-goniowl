@@ -50,9 +50,16 @@ CMD [ "while true; do sleep 30; done;" ]
 FROM ubuntu:noble AS runtime
 
 # Add apt-get system dependecies for runtime here if needed
-# RUN apt-get update -y && apt-get install -y --no-install-recommends \
-#     some-library \
-#     && apt-get dist-clean
+# Install required system libraries for opencv-python-headless 4.13.0.90
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    libx11-6 \
+    libxcb1 \
+    libgl1 \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy the python installation from the build stage
 COPY --from=build /python /python
