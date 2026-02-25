@@ -6,13 +6,15 @@ import keras
 import numpy as np
 import tensorflow as tf
 from fastcs.attributes import AttrR
-from fastcs.controller import Controller
+from fastcs.controllers.controller import Controller
 from fastcs.datatypes import Int
-from fastcs.wrappers import command
+from fastcs.logging import bind_logger
+from fastcs.methods import command
 
 # 20250929_122040_epoch100_binary_batch4.keras is 1/5 scaled image!
 
 image_divider = 5
+logger = bind_logger("gowniowl")
 
 
 class GoniOwlController(Controller):
@@ -21,17 +23,10 @@ class GoniOwlController(Controller):
     def __init__(self, keras_file_path: str):
         self.keras_file_path = keras_file_path
         self.log_path = "GoniOwl_binary_controller.log"
-        # with open(self.log_path, "a") as f:
-        #     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        #     f.write(f"{timestamp} - INFO - GoniOwl binary controller started.\n")
+        logger.info("GoniOwl binary controller started")
         self.model_name = self.keras_file_path
         self.model = keras.models.load_model(self.model_name)
-
-        # with open(self.log_path, "a") as f:
-        #     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        #     f.write(
-        #         f"{timestamp} - INFO - Model {self.model_name} loaded successfully.\n"
-        #     )
+        logger.info(f"Model {self.model_name} loaded successfully")
         self.model.summary()
         self.classes = ["pinoff", "pinon"]
         super().__init__()
@@ -101,11 +96,8 @@ class GoniOwlController(Controller):
         rounded_score = np.round((self.score * 100), 3)
         msg = f"Status is {self.predicted_label} with {str(rounded_score)} % conf."
         print(msg)
-
-        # with open(self.log_path, "a") as f:
-        #     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        #     f.write(f"{timestamp} - INFO - {msg}\n")
+        logger.info(f"{msg}")
 
     @command()
     async def infer_pin(self) -> None:
-        await self.status.set(self.infer())
+        await self.status.update(self.infer())

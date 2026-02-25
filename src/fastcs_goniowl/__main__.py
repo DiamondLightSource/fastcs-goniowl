@@ -5,11 +5,12 @@ from collections.abc import Sequence
 from pathlib import Path
 
 from fastcs.launch import FastCS
-from fastcs.transport.epics.ca.options import EpicsCAOptions
-from fastcs.transport.epics.options import (
+from fastcs.logging import GraylogEndpoint, LogLevel, configure_logging
+from fastcs.transports.epics import (
     EpicsGUIOptions,
     EpicsIOCOptions,
 )
+from fastcs.transports.epics.ca import EpicsCATransport
 
 from fastcs_goniowl.goniowl_controller import GoniOwlController
 
@@ -45,12 +46,16 @@ def main(args: Sequence[str] | None = None) -> None:
 
     ui_path = OPI_PATH if OPI_PATH.is_dir() else Path.cwd()
 
+    configure_logging(
+        LogLevel.INFO, GraylogEndpoint("graylog-log-target.diamond.ac.uk", 12201)
+    )
+
     # Create a controller instance...
     controller = GoniOwlController(keras_file_path=keras_file_path)
 
     # ...some IOC options...
-    options = EpicsCAOptions(
-        ca_ioc=EpicsIOCOptions(pv_prefix=pv_prefix),
+    options = EpicsCATransport(
+        epicsca=EpicsIOCOptions(pv_prefix=pv_prefix),
         gui=EpicsGUIOptions(
             output_path=ui_path / "goniowl.bob", title=f"GoniOwl - {pv_prefix}"
         ),
@@ -58,8 +63,6 @@ def main(args: Sequence[str] | None = None) -> None:
 
     # ...and pass them both to FastCS
     launcher = FastCS(controller, [options])
-    launcher.create_docs()
-    launcher.create_gui()
     launcher.run()
 
 
